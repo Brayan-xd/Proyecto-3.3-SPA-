@@ -4,9 +4,7 @@ import { ref, computed } from 'vue'
 const STORAGE_KEY = 'cafeteria_carrito'
 
 export const useCarritoStore = defineStore('carrito', () => {
-  const carrito = ref([]) // items: { id, nombre, precio, cantidad }
-
-  // init: cargar desde localStorage (si existe)
+  const carrito = ref([]) 
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) carrito.value = JSON.parse(raw)
@@ -14,7 +12,6 @@ export const useCarritoStore = defineStore('carrito', () => {
     console.warn('No se pudo leer carrito de localStorage', e)
   }
 
-  // persistir helper
   function persistir() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito.value))
@@ -23,7 +20,6 @@ export const useCarritoStore = defineStore('carrito', () => {
     }
   }
 
-  // actions
   function agregarAlCarrito(producto) {
     const existente = carrito.value.find(item => item.id === Number(producto.id))
     if (existente) {
@@ -49,7 +45,6 @@ export const useCarritoStore = defineStore('carrito', () => {
     persistir()
   }
 
-  // getters
   const totalArticulos = computed(() => carrito.value.reduce((s, it) => s + it.cantidad, 0))
   const totalPrecio = computed(() => carrito.value.reduce((s, it) => s + it.precio * it.cantidad, 0))
 

@@ -30,7 +30,6 @@ export const useProductoStore = defineStore('producto', () => {
     state.productos = state.productos.filter(p => p.id !== Number(id))
   }
 
-  // getters (como funciones)
   function obtenerProductoPorId(id) {
     return state.productos.find(p => p.id === Number(id)) || null
   }
